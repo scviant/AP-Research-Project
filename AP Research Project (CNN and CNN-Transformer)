@@ -17,11 +17,11 @@ import pandas as pd
 
 # Global declaration: how many times to run or whether of not to run
 number_of_kfold = 10
-num_epochs_for_kfold = 100
-num_epochs_for_final = 100
-print_summary_decision = True
+num_epochs_for_kfold = 10
+num_epochs_for_final = 10
+print_summary_decision = False
 do_kfold_decision = True
-early_stopping_decision = True
+early_stopping_decision = False
 
 
 # CNN Model
@@ -428,8 +428,18 @@ metrics.calculate("Recall for Benign", cnn_benign['recall'].tolist(), xformer_be
 metrics.calculate("f1-score for Malignant", cnn_malignant['f1-score'].tolist(), xformer_malignant['f1-score'].tolist())
 metrics.calculate("f1-score for Benign", cnn_benign['f1-score'].tolist(), xformer_benign['f1-score'].tolist())
 
+metrics.calculate("Accuracy", cnn_kfold_acc, xformer_kfold_acc)
+
+print("\n********** CNN KFold Metrics **********")
+for i in range(0, number_of_kfold):
+    print(cnn_kfold_report[i])
+
 print("\n********** CNN Final Model Metrics **********")
 print(cnn_final_report)
+
+print("\n********** CNN Transformer KFold Metrics **********")
+for i in range(0, number_of_kfold):
+    print(xformer_kfold_report[i])
 
 print("\n********** CNN Transformer Model Metrics **********")
 print(xformer_final_report)
